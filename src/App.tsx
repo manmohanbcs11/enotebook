@@ -1,20 +1,22 @@
-import './App.css';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { About } from './components/About';
 import { Home } from './components/Home';
 import { NavBar } from './components/NavBar';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { NoteState } from './context/notes/NoteState';
 
-function App() {
+
+const App: React.FC = () => {
+
   return (
-    <>
-      <NavBar></NavBar>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </Router>
-    </>
+    <NoteState>
+        <Router>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </Router>
+    </NoteState>
   );
 }
 

@@ -1,9 +1,8 @@
-
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 
-export const NavBar = () => {
+export const NavBar: React.FC = () => {
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -16,17 +15,7 @@ export const NavBar = () => {
               <li className="nav-item">
                 <NavLink className="nav-link active" to="/about">About</NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link active" to="/age">User</NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link active" to="/about">Notes</NavLink>
-              </li>
             </ul>
-            <form className="d-flex" role="search">
-              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-              <button className="btn btn-outline-success" type="submit">Search</button>
-            </form>
           </div>
         </div>
       </nav>
