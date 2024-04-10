@@ -1,11 +1,11 @@
 import { createContext } from 'react';
 
 interface NoteContextType {
-  title: string;
-  description: string;
+  notes: any[];
+  setNotes: (notes: any[]) => void;
 }
 
 export const NoteContext = createContext<NoteContextType>({
-  title: '',
-  description: ''
+  notes: [],
+  setNotes: () => {},
 });
