@@ -1,11 +1,7 @@
-import { useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 export const NavBar: React.FC = () => {
   let location = useLocation();
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
 
   return (
     <div>
