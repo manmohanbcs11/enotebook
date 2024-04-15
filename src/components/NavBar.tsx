@@ -20,6 +20,10 @@ export const NavBar: React.FC = () => {
                 <NavLink className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} to="/about">About</NavLink>
               </li>
             </ul>
+            <form className="d-flex">
+              <NavLink className='btn btn-primary mx-1' to="/login" role="button">Login</NavLink>
+              <NavLink className='btn btn-primary mx-1' to="/signup" role="button">Signup</NavLink>
+            </form>
           </div>
         </div>
       </nav>
