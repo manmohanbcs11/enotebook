@@ -3,7 +3,7 @@ import { NoteContext } from './NoteContext';
 
 export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
   const API_URL = "http://localhost:5000/api/notes";
-  const AUTHTOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxNjkyZmI3NDJkYTNiOWUyMmRiMWU0Iiwicm9sZSI6IlVTRVIifSwiaWF0IjoxNzEyODQ1MzU4fQ.YcafedptrZ8QkC-nGuw78VU4qbRqUTcvknSntyWGBoI";
+  const AUTHTOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxNjkyZmI3NDJkYTNiOWUyMmRiMWU0Iiwicm9sZSI6IlVTRVIifSwiaWF0IjoxNzEzMTc5MzI0fQ.W4xWYvJwRNKdn7e1dkz8EcVwLf2oigsiJC-nUT8lNdQ";
   const [notes, setNotes] = useState<any[]>([]);
 
   const getNotes = async () => {
@@ -32,11 +32,13 @@ export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
     });
 
     const responseJson = await response.json();
+    console.log(responseJson);
     const newNote = {
       '_id': responseJson.data._id,
       'title': title,
       'description': description,
-      'tag': tag
+      'tag': tag,
+      'createdDate': responseJson.data.createdDate
     };
     setNotes([...notes, newNote]);
   }
@@ -51,7 +53,6 @@ export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
       }
     });
 
-    // const responseJson = response.json();
     setNotes(notes.filter((note) => note._id !== id));
   }
 
@@ -67,7 +68,6 @@ export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
       body: JSON.stringify({ 'id': id,  'title': title, 'description': description, 'tag': tag })
     });
 
-    // const responseJson = response.json();
     setNotes(notes.map((note) => note._id === id ? { ...note, title, description, tag } : note));
   }
 
