@@ -36,7 +36,8 @@ export const Login = (props: LoginProps) => {
   }
 
   return (
-    <div className='container'>
+    <div className='container mt-2'>
+      <h3 className='my-4'>Please login to use eNotebook:</h3>
       <form onSubmit={handleOnSubmit}>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email address</label>

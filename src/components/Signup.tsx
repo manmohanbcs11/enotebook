@@ -11,7 +11,7 @@ export const Signup = (props: SignupProps) => {
   useEffect(() => {
     document.title = "eNotebook - Signup";
   });
-  
+
   const [body, setBody] = useState({
     name: '',
     email: '',
@@ -47,7 +47,8 @@ export const Signup = (props: SignupProps) => {
   }
 
   return (
-    <div>
+    <div className='container mt-2'>
+      <h3 className='my-4'>Please signup to use eNotebook:</h3>
       <form onSubmit={handleOnSubmit}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">Name</label>
