@@ -5,6 +5,9 @@ interface AlertProp {
 
 export function Alert(props: AlertProp) {
   const capitalize = (word: string) => {
+    if(word === 'danger') {
+      word = 'Error';
+    }
     return word.charAt(0).toUpperCase() + word.slice(1);
   }
 

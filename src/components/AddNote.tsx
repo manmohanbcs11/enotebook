@@ -1,7 +1,11 @@
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { NoteContext } from '../context/notes/NoteContext';
 
-export default function AddNote() {
+interface AddNoteProps{
+  showAlert: (type: string, message: string) => void;
+}
+
+export default function AddNote(props: AddNoteProps) {
   const context = useContext(NoteContext);
   const { addNote } = context;
   const [note, setNote] = useState({
@@ -19,6 +23,7 @@ export default function AddNote() {
       description: '',
       tag: ''
     });
+    props.showAlert('success', 'Note added successfully');
   }
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {

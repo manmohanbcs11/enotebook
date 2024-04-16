@@ -1,7 +1,13 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 export const NavBar: React.FC = () => {
   let location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  }
 
   return (
     <div>
@@ -20,10 +26,12 @@ export const NavBar: React.FC = () => {
                 <NavLink className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} to="/about">About</NavLink>
               </li>
             </ul>
-            <form className="d-flex">
-              <NavLink className='btn btn-primary mx-1' to="/login" role="button">Login</NavLink>
-              <NavLink className='btn btn-primary mx-1' to="/signup" role="button">Signup</NavLink>
-            </form>
+            {localStorage.getItem('token') ? <button className="btn btn-primary mx-1" type="submit" onClick={handleLogout}>Logout</button> :
+              <form className='d-flex'>
+                <NavLink className='btn btn-primary mx-1' to="/login" role="button">Login</NavLink>
+                <NavLink className='btn btn-primary mx-1' to="/signup" role="button">Signup</NavLink>
+              </form>
+            }
           </div>
         </div>
       </nav>

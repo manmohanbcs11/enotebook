@@ -1,8 +1,17 @@
-import React, { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const Signup: React.FC = () => {
+interface SignupProps {
+  showAlert: (type: string, message: string) => void;
+}
+
+export const Signup = (props: SignupProps) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "eNotebook - Signup";
+  });
+  
   const [body, setBody] = useState({
     name: '',
     email: '',
@@ -15,7 +24,7 @@ export const Signup: React.FC = () => {
     const { name, email, password, cpassword } = body;
 
     if (password !== cpassword) {
-      alert('Passwords are not matching!');
+      props.showAlert('danger', 'Passwords are not matching!');
       return;
     }
 
@@ -30,9 +39,10 @@ export const Signup: React.FC = () => {
       const responseJson = await response.json();
       localStorage.setItem('token', responseJson.data.authToken);
       navigate('/');
+      props.showAlert('success', 'Registered successfully!');
     } else {
       const errorData = await response.json();
-      alert(errorData.message);
+      props.showAlert('danger', errorData.message);
     }
   }
 

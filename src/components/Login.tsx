@@ -1,14 +1,21 @@
-import React, { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const Login: React.FC = () => {
+interface LoginProps {
+  showAlert: (type: string, message: string) => void;
+}
+
+export const Login = (props: LoginProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = "eNotebook - Login";
+  });
+
   const handleOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('handleOnSubmit method:');
     const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
       method: 'POST',
       headers: {
@@ -16,13 +23,15 @@ export const Login: React.FC = () => {
       },
       body: JSON.stringify({ 'email': email, 'password': password })
     });
+
     if(response.ok) {
       const responseJson = await response.json();
       localStorage.setItem('token', responseJson.data.authToken);
       navigate('/');
+      props.showAlert('success', 'Logged in successfully!');
     } else {
       const errorData = await response.json();
-      alert(errorData.message);
+      props.showAlert('danger', errorData.message);
     }
   }
 

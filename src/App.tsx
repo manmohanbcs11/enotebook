@@ -22,9 +22,9 @@ const App: React.FC = () => {
         message: '',
         type: ''
       });
-    }, 3000);
+    }, 2000);
   };
-  
+
   return (
     <NoteState>
       <Router>
@@ -32,10 +32,10 @@ const App: React.FC = () => {
         <Alert alert={alert} />
         <div className='container'>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home showAlert={showAlert} />} />
             <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login showAlert={showAlert} />} />
+            <Route path="/signup" element={<Signup showAlert={showAlert} />} />
           </Routes>
         </div>
       </Router>

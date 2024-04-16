@@ -3,10 +3,16 @@ import { NoteContext } from '../context/notes/NoteContext';
 import NoteItem from './NoteItem';
 import AddNote from './AddNote';
 import { NoteDto } from '../dto';
+import { useNavigate } from 'react-router-dom';
 
-export default function Notes() {
+interface NotesProps {
+  showAlert: (type: string, message: string) => void;
+}
+
+export default function Notes(props: NotesProps) {
   const context = useContext(NoteContext);
   const { notes, getNotes, editNote } = context;
+  const navigate = useNavigate();
 
   const [note, setNote] = useState({
     id: '',
@@ -17,14 +23,19 @@ export default function Notes() {
 
 
   useEffect(() => {
-    getNotes();
-  });
+    const token = localStorage.getItem('token');
+    if (token) {
+      getNotes();
+    } else {
+      navigate('/login');
+    }
+  }, []);
+  
 
   const ref = useRef<HTMLButtonElement>(null);
   const refClose = useRef<HTMLButtonElement>(null);
 
   const updateNote = (id: string, title: string, description: string, tag: string) => {
-    console.log('updateNote method.');
     if (ref.current) {
       ref.current.click();
       setNote({ id: id, eTitle: title, eDescription: description, eTag: tag });
@@ -32,10 +43,10 @@ export default function Notes() {
   }
 
   const handleOnSave = (event: FormEvent<HTMLFormElement>) => {
-    console.log('handleOnSave method:', note);
     event.preventDefault();
     editNote(note.id, note.eTitle, note.eDescription, note.eTag);
     refClose.current?.click();
+    props.showAlert('success', 'Note updated successfully');
   }
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +55,7 @@ export default function Notes() {
 
   return (
     <>
-      <AddNote />
+      <AddNote showAlert={props.showAlert} />
       <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
       </button>
@@ -85,7 +96,7 @@ export default function Notes() {
         <div className='row'>
           {notes.length === 0 && <p>No notes to show.</p>}
           {notes.map((noteItem: NoteDto) => {
-            return <NoteItem key={noteItem._id} updateNote={updateNote} note={noteItem} />;
+            return <NoteItem key={noteItem._id} updateNote={updateNote} note={noteItem} showAlert={props.showAlert} />;
           })}
         </div>
       </div>

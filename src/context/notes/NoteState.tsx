@@ -2,7 +2,7 @@ import React, { ReactNode, useState } from 'react';
 import { NoteContext } from './NoteContext';
 
 export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const AUTHTOKEN = process.env.REACT_APP_AUTH_TOKEN || '';
+  const AUTH_TOKEN = localStorage.getItem('token') || '';
   const [notes, setNotes] = useState<any[]>([]);
 
   const getNotes = async () => {
@@ -11,7 +11,7 @@ export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': AUTHTOKEN
+        'auth-token': AUTH_TOKEN
       }
     });
     const responseJson = await response.json();
@@ -25,7 +25,7 @@ export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': AUTHTOKEN
+        'auth-token': AUTH_TOKEN
       },
       body: JSON.stringify({ 'title': title, 'description': description, 'tag': tag })
     });
@@ -48,7 +48,7 @@ export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': AUTHTOKEN
+        'auth-token': AUTH_TOKEN
       }
     });
 
@@ -62,7 +62,7 @@ export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': AUTHTOKEN
+        'auth-token': AUTH_TOKEN
       },
       body: JSON.stringify({ 'id': id,  'title': title, 'description': description, 'tag': tag })
     });
