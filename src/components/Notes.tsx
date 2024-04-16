@@ -18,7 +18,7 @@ export default function Notes() {
 
   useEffect(() => {
     getNotes();
-  }, []);
+  });
 
   const ref = useRef<HTMLButtonElement>(null);
   const refClose = useRef<HTMLButtonElement>(null);

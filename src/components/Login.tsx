@@ -2,7 +2,6 @@ import React, { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const Login: React.FC = () => {
-  const AUTH_API_URL = "http://localhost:5000/api/auth";
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -10,7 +9,7 @@ export const Login: React.FC = () => {
   const handleOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log('handleOnSubmit method:');
-    const response = await fetch(`${AUTH_API_URL}/login`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

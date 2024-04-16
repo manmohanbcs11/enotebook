@@ -2,13 +2,12 @@ import React, { ReactNode, useState } from 'react';
 import { NoteContext } from './NoteContext';
 
 export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const API_URL = "http://localhost:5000/api/notes";
-  const AUTHTOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjYxNjkyZmI3NDJkYTNiOWUyMmRiMWU0Iiwicm9sZSI6IlVTRVIifSwiaWF0IjoxNzEzMTc5MzI0fQ.W4xWYvJwRNKdn7e1dkz8EcVwLf2oigsiJC-nUT8lNdQ";
+  const AUTHTOKEN = process.env.REACT_APP_AUTH_TOKEN || '';
   const [notes, setNotes] = useState<any[]>([]);
 
   const getNotes = async () => {
     console.log('Fetching notes...');
-    const response = await fetch(`${API_URL}/fetchnotes`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/notes/fetchnotes`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +21,7 @@ export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
   const addNote = async (title: string, description: string, tag: string) => {
     console.log('Adding a note:', title, description, tag);
 
-    const response = await fetch(`${API_URL}/addnote`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/notes/addnote`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +44,7 @@ export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const deleteNote = async (id: string) => {
     console.log('Deleting a note with id:', id);
-    const response = await fetch(`${API_URL}/deletenote/${id}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/notes/deletenote/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +58,7 @@ export const NoteState: React.FC<{ children: ReactNode }> = ({ children }) => {
   const editNote = async (id: string, title: string, description: string, tag: string) => {
     console.log('Editing a note with id:', id);
 
-    const response = await fetch(`${API_URL}/updatenote`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/notes/updatenote`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

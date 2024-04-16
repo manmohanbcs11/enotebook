@@ -2,7 +2,6 @@ import React, { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const Signup: React.FC = () => {
-  const AUTH_API_URL = "http://localhost:5000/api/auth";
   const navigate = useNavigate();
   const [body, setBody] = useState({
     name: '',
@@ -20,7 +19,7 @@ export const Signup: React.FC = () => {
       return;
     }
 
-    const response = await fetch(`${AUTH_API_URL}/signup`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
