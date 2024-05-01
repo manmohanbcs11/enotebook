@@ -1,7 +1,6 @@
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 export const NavBar: React.FC = () => {
-  let location = useLocation();
   const navigate = useNavigate();
 
   const handleLogout = () => {
