@@ -1,0 +1,28 @@
+.contact-container {
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background for better readability */
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .contact-container h2 {
+    color: #333;
+  }
+  
+  .contact-methods {
+    margin: 20px 0;
+  }
+  
+  .contact-item {
+    margin-bottom: 10px;
+  }
+  
+  .contact-item a {
+    color: #1d60a3; /* Highlight links with a distinct color */
+    text-decoration: none;
+  }
+  
+  .contact-item a:hover {
+    text-decoration: underline; /* Adds underline on hover for accessibility */
+  }
+  

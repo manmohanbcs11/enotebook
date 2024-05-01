@@ -1,12 +1,14 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { About } from './components/About';
-import { Home } from './components/Home';
-import { NavBar } from './components/NavBar';
-import { NoteState } from './context/notes/NoteState';
-import { Alert } from './components/Alert';
 import { useState } from 'react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { AboutUs } from './components/AboutUs';
+import { Alert } from './components/Alert';
+import { ContactUs } from './components/ContactUs';
+import { Home } from './components/Home';
 import { Login } from './components/Login';
+import { NavBar } from './components/NavBar';
 import { Signup } from './components/Signup';
+import { TermsService } from './components/TermsService';
+import { NoteState } from './context/notes/NoteState';
 
 const App: React.FC = () => {
   const [alert, setAlert] = useState<{ type: string; message: string }>({ type: '', message: '' });
@@ -30,10 +32,12 @@ const App: React.FC = () => {
       <Router>
         <NavBar />
         <Alert alert={alert} />
-        <div className='container'>
+        <div>
           <Routes>
             <Route path="/" element={<Home showAlert={showAlert} />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/terms" element={<TermsService />} />
+            <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/login" element={<Login showAlert={showAlert} />} />
             <Route path="/signup" element={<Signup showAlert={showAlert} />} />
           </Routes>

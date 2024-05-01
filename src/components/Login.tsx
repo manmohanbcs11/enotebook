@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/Login.css';
+import Footer from './Footer';
 
 interface LoginProps {
   showAlert: (type: string, message: string) => void;
@@ -12,7 +13,7 @@ export const Login = (props: LoginProps) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "eNotebook - Login";
+    document.title = "eNotepad - Login";
   }, []); // Adding empty dependency array to avoid continuous re-rendering
 
   const handleOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -41,38 +42,41 @@ export const Login = (props: LoginProps) => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login to eNotebook</h2> {/* Improved heading */}
-      <form className="login-form my-4" onSubmit={handleOnSubmit}>
-        {/* Email Input */}
-        <div className="form-group">
-          <label htmlFor="email" className="form-label">Email Address</label>
-          <input
-            type="email"
-            className="form-input"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
+    <div>
+      <div className="login-container">
+        <h2>Login to eNotepad</h2> {/* Improved heading */}
+        <form className="login-form my-4" onSubmit={handleOnSubmit}>
+          {/* Email Input */}
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">Email Address</label>
+            <input
+              type="email"
+              className="form-input"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-        {/* Password Input */}
-        <div className="form-group">
-          <label htmlFor="password" className="form-label">Password</label>
-          <input
-            type="password"
-            className="form-input"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+          {/* Password Input */}
+          <div className="form-group">
+            <label htmlFor="password" className="form-label">Password</label>
+            <input
+              type="password"
+              className="form-input"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-        {/* Submit Button */}
-        <button type="submit" className="submit-btn">Submit</button>
-      </form>
+          {/* Submit Button */}
+          <button type="submit" className="submit-btn">Submit</button>
+        </form>
+      </div>
+      <Footer />
     </div>
   );
 };

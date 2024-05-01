@@ -8,7 +8,7 @@ interface HomeProps {
 export const Home = (props: HomeProps) => {
 
   useEffect(() => {
-    document.title = "eNotebook - Home";
+    document.title = "eNotepad - Home";
   });
 
   return (

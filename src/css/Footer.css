@@ -1,0 +1,33 @@
+.footer-container {
+  background-color: #1d60a3; /* Footer background color */
+  color: white; /* Text color */
+  padding: 20px; /* Padding for content */
+  text-align: center; /* Center-align text */
+  position: absolute; /* Absolute positioning to anchor footer */
+  bottom: 0; /* Place at the bottom of the page */
+  width: 100%; /* Ensure footer spans full width */
+  margin: 0; /* No additional margins */
+}
+
+.footer-content {
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Vertical layout */
+  align-items: center; /* Center-align content */
+}
+
+.footer-links,
+.footer-social {
+  margin: 10px 0; /* Space between footer sections */
+}
+
+.footer-links a,
+.footer-social a {
+  color: white; /* White text for links */
+  text-decoration: none; /* No underline by default */
+  margin: 0 10px; /* Horizontal spacing between links */
+}
+
+.footer-links a:hover,
+.footer-social a:hover {
+  text-decoration: underline; /* Underline on hover for interactivity */
+}
