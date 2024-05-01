@@ -1,0 +1,50 @@
+.add-note-container {
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background for readability */
+    border-radius: 8px;
+    border: 1px solid #272525; /* Border for a subtle outline */
+    max-width: 600px; /* Limit the maximum width for better alignment */
+    margin: auto; /* Center the form on the page */
+  }
+  
+  .separator-line {
+    border: 1px solid #272525; /* Defines the line border */
+    margin: 20px 0; /* Adds space before and after the line */
+  }
+  
+  .note-form {
+    display: flex;
+    flex-direction: column; /* Maintain column layout */
+    gap: 15px; /* Even spacing between form groups */
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column; /* Ensures labels are aligned above inputs */
+  }
+  
+  .form-label {
+    font-weight: bold; /* Highlight the label text */
+  }
+  
+  .form-input,
+  .form-textarea {
+    border: 1px solid #ccc; /* Light border for input fields */
+    padding: 10px; /* Padding for comfort */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1rem; /* Consistent font size */
+  }
+  
+  .submit-btn {
+    padding: 10px 20px; /* Comfortable padding */
+    background-color: #1d60a3; /* Primary color */
+    color: white; /* White text for contrast */
+    border: none; /* No border for cleaner look */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Indicates interactivity */
+  }
+  
+  .submit-btn:hover {
+    background-color: #16457d; /* Darker on hover */
+  }
+  

@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../css/Login.css';
 
 interface LoginProps {
   showAlert: (type: string, message: string) => void;
@@ -12,43 +13,66 @@ export const Login = (props: LoginProps) => {
 
   useEffect(() => {
     document.title = "eNotebook - Login";
-  });
+  }, []); // Adding empty dependency array to avoid continuous re-rendering
 
   const handleOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ 'email': email, 'password': password })
-    });
+    event.preventDefault(); // Prevent page reload
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-    if(response.ok) {
-      const responseJson = await response.json();
-      localStorage.setItem('token', responseJson.data.authToken);
-      navigate('/');
-      props.showAlert('success', 'Logged in successfully!');
-    } else {
-      const errorData = await response.json();
-      props.showAlert('danger', errorData.message);
+      if (response.ok) {
+        const responseJson = await response.json();
+        localStorage.setItem('token', responseJson.data.authToken); // Store token
+        navigate('/'); // Navigate to home
+        props.showAlert('success', 'Logged in successfully!');
+      } else {
+        const errorData = await response.json();
+        props.showAlert('danger', errorData.message); // Show error message
+      }
+    } catch (error) {
+      props.showAlert('danger', 'An error occurred during login.');
     }
-  }
+  };
 
   return (
-    <div className='container mt-2'>
-      <h3 className='my-4'>Please login to use eNotebook:</h3>
-      <form onSubmit={handleOnSubmit}>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address</label>
-          <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+    <div className="login-container">
+      <h2>Login to eNotebook</h2> {/* Improved heading */}
+      <form className="login-form my-4" onSubmit={handleOnSubmit}>
+        {/* Email Input */}
+        <div className="form-group">
+          <label htmlFor="email" className="form-label">Email Address</label>
+          <input
+            type="email"
+            className="form-input"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
         </div>
-        <div className="mb-3">
+
+        {/* Password Input */}
+        <div className="form-group">
           <label htmlFor="password" className="form-label">Password</label>
-          <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <input
+            type="password"
+            className="form-input"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
+
+        {/* Submit Button */}
+        <button type="submit" className="submit-btn">Submit</button>
       </form>
     </div>
-  )
-}
+  );
+};

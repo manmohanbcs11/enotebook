@@ -1,73 +1,131 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../css/Signup.css';
 
 interface SignupProps {
   showAlert: (type: string, message: string) => void;
 }
 
-export const Signup = (props: SignupProps) => {
+export const Signup: React.FC<SignupProps> = ({ showAlert }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "eNotebook - Signup";
-  });
+  }, []); // Empty dependency array to avoid continuous re-rendering
 
-  const [body, setBody] = useState({
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    cpassword: ''
+    cpassword: '',
   });
 
   const handleOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const { name, email, password, cpassword } = body;
+    event.preventDefault(); // Prevent page reload
+
+    const { name, email, password, cpassword } = formData;
 
     if (password !== cpassword) {
-      props.showAlert('danger', 'Passwords are not matching!');
+      showAlert('danger', 'Passwords do not match!');
       return;
     }
 
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name, email, password })
-    });
-    if (response.ok) {
-      const responseJson = await response.json();
-      localStorage.setItem('token', responseJson.data.authToken);
-      navigate('/');
-      props.showAlert('success', 'Registered successfully!');
-    } else {
-      const errorData = await response.json();
-      props.showAlert('danger', errorData.message);
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      if (response.ok) {
+        const responseJson = await response.json();
+        localStorage.setItem('token', responseJson.data.authToken); // Store auth token
+        navigate('/'); // Navigate to home page
+        showAlert('success', 'Registered successfully!');
+      } else {
+        const errorData = await response.json();
+        showAlert('danger', errorData.message); // Show error message
+      }
+    } catch (error) {
+      showAlert('danger', 'An error occurred during signup.');
     }
-  }
+  };
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
   return (
-    <div className='container mt-2'>
-      <h3 className='my-4'>Please signup to use eNotebook:</h3>
-      <form onSubmit={handleOnSubmit}>
-        <div className="mb-3">
+    <div className="signup-container">
+      <h2>Signup for eNotebook</h2> {/* Improved heading */}
+      <form className="signup-form my-4" onSubmit={handleOnSubmit}>
+        {/* Name Input */}
+        <div className="form-group">
           <label htmlFor="name" className="form-label">Name</label>
-          <input type="text" className="form-control" id="name" name="name" value={body.name} onChange={(e) => setBody({ ...body, name: e.target.value })} minLength={3} required />
+          <input
+            type="text"
+            className="form-input"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            minLength={3}
+            required
+          />
         </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address</label>
-          <input type="email" className="form-control" id="email" name='email' value={body.email} onChange={(e) => setBody({ ...body, email: e.target.value })} required />
+
+        {/* Email Input */}
+        <div className="form-group">
+          <label htmlFor="email" className="form-label">Email Address</label>
+          <input
+            type="email"
+            className="form-input"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+          />
         </div>
-        <div className="mb-3">
+
+        {/* Password Input */}
+        <div className="form-group">
           <label htmlFor="password" className="form-label">Password</label>
-          <input type="password" className="form-control" id="password" name='password' value={body.password} onChange={(e) => setBody({ ...body, password: e.target.value })} minLength={6} required />
+          <input
+            type="password"
+            className="form-input"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            minLength={6}
+            required
+          />
         </div>
-        <div className="mb-3">
-          <label htmlFor="cpassword" className="form-label">Password</label>
-          <input type="password" className="form-control" id="cpassword" name='cpassword' value={body.cpassword} onChange={(e) => setBody({ ...body, cpassword: e.target.value })} required />
+
+        {/* Confirm Password Input */}
+        <div className="form-group">
+          <label htmlFor="cpassword" className="form-label">Confirm Password</label>
+          <input
+            type="password"
+            className="form-input"
+            id="cpassword"
+            name="cpassword"
+            value={formData.cpassword}
+            onChange={handleInputChange}
+            required
+          />
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
+
+        {/* Submit Button */}
+        <button type="submit" className="submit-btn">Register</button>
       </form>
     </div>
-  )
-}
+  );
+};

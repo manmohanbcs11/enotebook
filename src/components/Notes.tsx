@@ -4,6 +4,7 @@ import NoteItem from './NoteItem';
 import AddNote from './AddNote';
 import { NoteDto } from '../dto';
 import { useNavigate } from 'react-router-dom';
+import '../css/AddNote.css';
 
 interface NotesProps {
   showAlert: (type: string, message: string) => void;
@@ -91,6 +92,7 @@ export default function Notes(props: NotesProps) {
           </div>
         </div>
       </div>
+      <hr className="separator-line" />
       <div className='mx-2 my-3'>
         <h2>Your Notes:</h2>
         <div className='row'>

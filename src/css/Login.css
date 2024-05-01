@@ -1,0 +1,45 @@
+.login-container {
+    padding: 30px; /* More padding for a spacious feel */
+    background-color: #f9f9f9; /* Light background for better readability */
+    border-radius: 8px; /* Rounded corners for smooth look */
+    max-width: 500px; /* Limit the form's width for better alignment */
+    margin: auto; /* Center the form */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center; /* Center text alignment for visual consistency */
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column; /* Maintain a vertical flow */
+    gap: 15px; /* Space between form elements */
+  }
+  
+  .form-group {
+    text-align: left; /* Align labels to the left */
+  }
+  
+  .form-label {
+    font-weight: bold; /* Emphasize label text */
+  }
+  
+  .form-input {
+    border: 1px solid #ccc; /* Light border for inputs */
+    padding: 10px; /* Padding for comfort */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1rem; /* Consistent font size */
+  }
+  
+  .submit-btn {
+    padding: 10px 20px; /* Comfortable padding for button */
+    background-color: #1d60a3; /* Primary color for button */
+    color: white; /* White text for contrast */
+    border: none; /* No border for sleek look */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to indicate interactivity */
+    transition: background-color 0.3s; /* Smooth hover transition */
+  }
+  
+  .submit-btn:hover {
+    background-color: #16457d; /* Darken on hover */
+  }
+  
