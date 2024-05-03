@@ -36,19 +36,25 @@ export default function Notes(props: NotesProps) {
   const ref = useRef<HTMLButtonElement>(null);
   const refClose = useRef<HTMLButtonElement>(null);
 
-  const updateNote = (id: string, title: string, description: string, tag: string) => {
-    if (ref.current) {
-      ref.current.click(); // Open modal for editing
-      setNote({ id, eTitle: title, eDescription: description, eTag: tag });
-    }
-  };
+  const updateNote = useCallback(
+    (id: string, title: string, description: string, tag: string) => {
+      if (ref.current) {
+        ref.current.click(); // Open modal for editing
+        setNote({ id, eTitle: title, eDescription: description, eTag: tag });
+      }
+    },
+    [], // Empty dependency array ensures the function reference is stable
+  );
 
-  const handleOnSave = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    editNote(note.id, note.eTitle, note.eDescription, note.eTag); // Save changes
-    refClose.current?.click(); // Close modal after saving
-    props.showAlert('success', 'Note updated successfully'); // Display success alert
-  };
+  const handleOnSave = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      editNote(note.id, note.eTitle, note.eDescription, note.eTag); // Save changes
+      refClose.current?.click(); // Close modal after saving
+      props.showAlert('success', 'Note updated successfully'); // Display success alert
+    },
+    [editNote, note, props], // Ensure stable dependencies
+  );
 
   return (
     <div className="container">
@@ -72,7 +78,6 @@ export default function Notes(props: NotesProps) {
                     type="text"
                     className="form-control"
                     id="eTitle"
-                    name="eTitle"
                     value={note.eTitle}
                     onChange={(e) => setNote({ ...note, eTitle: e.target.value })}
                     required
@@ -83,7 +88,6 @@ export default function Notes(props: NotesProps) {
                   <textarea
                     className="form-control"
                     id="eDescription"
-                    name="eDescription"
                     value={note.eDescription}
                     onChange={(e) => setNote({ ...note, eDescription: e.target.value })}
                     required
@@ -95,15 +99,18 @@ export default function Notes(props: NotesProps) {
                     type="text"
                     className="form-control"
                     id="eTag"
-                    name="eTag"
                     value={note.eTag}
                     onChange={(e) => setNote({ ...note, eTag: e.target.value })}
                     required
                   />
                 </div>
                 <div className="modal-footer">
-                  <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" className="btn btn-primary">Save changes</button>
+                  <button type="button" ref={refClose} className="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                  <button type="submit" className="btn btn-primary">
+                    Save changes
+                  </button>
                 </div>
               </form>
             </div>
@@ -114,9 +121,18 @@ export default function Notes(props: NotesProps) {
       <div className="mx-2 my-3">
         <h2>Your Notes:</h2>
         <div className="row">
-          {notes.length === 0 ? <p>No notes to show.</p> : notes.map((noteItem) => (
-            <NoteItem key={noteItem._id} updateNote={updateNote} note={noteItem} showAlert={props.showAlert} />
-          ))}
+          {notes.length === 0 ? (
+            <p>No notes to show.</p>
+          ) : (
+            notes.map((noteItem) => (
+              <NoteItem
+                key={noteItem._id}
+                updateNote={updateNote}
+                note={noteItem}
+                showAlert={props.showAlert}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>
